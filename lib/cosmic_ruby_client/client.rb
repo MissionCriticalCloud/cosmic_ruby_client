@@ -28,7 +28,7 @@ class CosmicRubyClient::Client < CosmicRubyClient::BaseClient
 
   ## Cosmic management server version
   def version
-    self.list_capabilities["capability"]["cosmicversion"]
+    self.list_capabilities["capability"]["cloudstackversion"]
   end
 
   ## login api command

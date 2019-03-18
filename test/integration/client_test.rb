@@ -3,9 +3,9 @@ require 'cosmic_ruby_client'
 
 class SampleTest < Test::Unit::TestCase
 
-  URL = 'http://192.168.56.10:8080/client/api/'
-  APIKEY = 'yy0sfCPpyKnvREhgpeIWzXORIIvyteq_iCgFpKXnqpdbnHuoYiK78nprSggG4hcx-hxwW897nU-XvGB0Tq8YFw'
-  SECKEY = 'Pse4fqYNnr1xvoRXlAe8NQKCSXeK_VGdwUxUzyLEPVQ7B3cI1Q7B8jmZ42FQpz2jIICFax1foIzg2716lJFZVw'
+  URL = 'http://192.168.22.61:8080/client/api/'
+  APIKEY = ''
+  SECKEY = ''
 
   def test_listNetworkOfferings
     client = CosmicRubyClient::Client.new(URL, APIKEY, SECKEY, false)

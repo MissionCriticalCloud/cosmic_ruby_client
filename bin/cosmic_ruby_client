@@ -3,6 +3,7 @@ require 'readline'
 require 'yaml'
 require 'json'
 require 'cosmic_ruby_client'
+require 'awesome_print'
 
 
 case ARGV.first when '-h', '--help', '--usage', '-?', 'help', nil
@@ -14,16 +15,16 @@ when '--version'
 end
 
 
-APIKEY    = ARGV[2]
-SECRETKEY = ARGV[3]
-URL       = "http://#{ARGV[0]}:#{ARGV[1]}/client/api/"
+APIKEY    = ARGV[1]
+SECRETKEY = ARGV[2]
+URL       = ARGV[0]
 
 comp = proc { |s| CosmicRubyClient::Client.API_LIST.sort.grep(/^#{Regexp.escape(s)}/) }
 
 client = nil
 
 begin
-  client = CosmicRubyClient::Client.new(URL, APIKEY, SECRETKEY, false)
+  client = CosmicRubyClient::Client.new(URL, APIKEY, SECRETKEY, true)
 rescue
   puts 'Error, cannot initiate the cloudStackRubyClient.'
   exit
@@ -42,17 +43,18 @@ Readline.completer_word_break_characters = ''
 stty_save = `stty -g`.chomp
 
 begin
-  while line = Readline.readline("cosmic(#{ARGV[0]}:#{ARGV[1]})>>", true)
+  while line = Readline.readline("cosmic(#{ARGV[0]})>>", true)
     begin
       command  = line.split(' ')[0].strip
       argument = line.gsub(command, '').strip
   
       if argument
         argument = JSON.parse("{" + line.gsub(command, '').gsub('\'', '"').gsub('=>', ':') + "}")
-        puts client.method(command).call argument
+        result = client.method(command).call argument
       else
-        puts client.method(command).call
+        result = client.method(command).call
       end
+      ap result, :indent => -2
     rescue ArgumentError => e
       puts "#{e.to_s}"
     rescue CosmicRubyClient::RequestError => e
