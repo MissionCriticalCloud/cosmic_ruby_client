@@ -1,4 +1,5 @@
-# cosmic_ruby_client
+cosmic_ruby_client
+======================
 
 A Ruby client for Cosmic's API, licensed via the Apache Software License v2.
 
